@@ -74,7 +74,7 @@ num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 
 # Initialize webcam feed'''
 
-video = cv2.VideoCapture(2)
+video = cv2.VideoCapture(0)
 qret = video.set(3,1280)
 ret = video.set(4,720)
 
