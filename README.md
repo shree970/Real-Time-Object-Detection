@@ -71,59 +71,31 @@ After one complete sorting, press EXIT and start again for next, as it will thro
 
 Make sure the timing between each consecutive object is more than 2-3 sec, *after* completetion of arm operation
 
+### For inference on laptop with webcam
+	python3 Object_detection_webcam.py
 
 
 # Section 2) Theory and workflow
 
 Tensorflow object detection API workflow:
 
-Refer this github repo:	https://github.com/datitran/raccoon_dataset
+Credits: https://github.com/datitran/raccoon_dataset
 
+Overall Summary:
 1. Create dataset, ~800*600 preferred 
 2. Label using labelimg github that outputs xml file
-3. convert xml to csv using script
+3. Convert xml to csv using script
 4. Convert csv to TF record file using script generateTFrecord.py
-5. creat pbtxt file inside training folder and mention all classes in dataset in given format
-6. Download selected model configuration(ssd-mobilenet.conf) file and edit the parameters such as various paths, number of classes, augmentations etc
-7. copy all these files into object_detection folder in API
+5. Create pbtxt file inside training folder and mention all classes in dataset in given format
+6. Download selected model configuration(ssd-mobilenet.conf) file and edit the parameters such as various paths, number of classes, augmentations,learning rates etc
+7. Copy all these files into object_detection folder in API
 8. Run train.py with input model, trainnig directory, dataset and configuration pipeline file with proper arguments
-9. Normally should train till 10,000 steps, or till loss < 1 or between 1-2, see progress model training on tensorboard usnig "events.." file inside the  
+9. Normally should train till 10,000 steps, or till loss < 1 or between 1-2, see progress model training on tensorboard usnig "events.." file inside the training folder  
 10. Convert the obtained ckpt file into frozen graph using export_inference_graph.py and giving required arguments
 
+For details and lessons learned, refer [this PPT](https://github.com/shree970/Real-Time-Object-Detection/blob/master/Practical%20Object%20Detection_updated.pdf)
 
-https://github.com/hardikvasa/google-images-download#installation
-
-
-DATASET PREPARATION PIPELINE:
-
-download pics using web scrapper(googleimagesdownload)
-
-RENAME THE PICS
-
-select useful pics from scrapper
-
-create manual dataset by frame extraction from video(python script)
-
-create a NONE dataset label by putting in all possible (VERY ACCIDENTAL) images that can be recorded by camera feed(ask doubt if always running)
-
-resize all pics to 256*256(resize.py)
-
-if size is big, crop the pics to smaller square dimensions(around 150:330,400:880), we get sq of 480 pixel size, then resize(crop.py to resize.py)
-
-
-select the important augmentations to run on resized images, that are in various orientations(AIsangam)
-
-Curate the final dataset to upto 300-500 image each
-
-Draw bounding boxes and obtain xml files using labelimg(2) and rotate the boxes accordingly
-
-
-
-
-SHOW FPS ON SCREEN, SAY RECORD FPS EVER
-
-
-all commands used:
+Important commands used:
 
 To install COCO api needed for training
 
@@ -133,14 +105,9 @@ To install COCO api needed for training
 	make
 	cp -r pycocotools ~/object_models/models-master/research/
 
-
-
-
 To start training:
 
 	python object_detection/legacy/train.py --logtostderr --train_dir=object_detection/training/ --pipeline_config_path=object_detection/training/ssdlite.config
-
-
 
 After finishing training
 
