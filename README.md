@@ -8,7 +8,7 @@
 1) OpenCV  
 2) Tensorflow (version below 1.9)   
 3) Module cdc-acm.ko         
-4)Cloned models repository of tensorflow    
+4) Cloned models repository of tensorflow    
 
 	git clone	https://github.com/tensorflow/models.git 
 
